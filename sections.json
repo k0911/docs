@@ -2,14 +2,17 @@
   "id": "getting-started",
   "title": "Getting Started"
 }, {
+  "id": "how-npm-works",
+  "title": "How npm works"
+}, {
   "id": "private-modules",
   "title": "Private Modules"
 }, {
+  "id": "troubleshooting",
+  "title": "Troubleshooting"
+}, {
   "id": "misc",
   "title": "Using npm"
-}, {
-  "id": "enterprise",
-  "title": "npm Enterprise"
 }, {
   "id": "cli",
   "title": "CLI Commands"

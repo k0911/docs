@@ -1,56 +1,44 @@
 <!--
-title: 03 - Fixing npm permissions
+title: 03 - How to prevent permissions errors
 featured: true
 -->
 
-# Fixing npm permissions
+# How to Prevent Permissions Errors
 
-<iframe src="//www.youtube.com/embed/bxvybxYFq2o" frameborder="0" allowfullscreen></iframe>
+If you see an `EACCES` error when you try to install a package globally, read this chapter. This error can often be avoided if you change the directory where npm is installed. To do this, either:
 
-You may receive an `EACCES` error when you try to install a package globally. This indicates that you do not have permission to write to the directories that npm uses to store global packages and commands.
+1.  Reinstall npm with a version manager (recommended), 
+ 
+ 	or
+ 
+1.  Change npm's default directory manually. 
 
-You can fix this problem using one of two options: 
 
-1. Change the permission to npm's default directory.
-1. Change npm's default directory to another directory.
+### Option One: Reinstall with a Node Version Manager
 
-You should back-up your computer before moving forward.
+This is the best way to avoid permissions issues. This is described in [Chapter 2](https://docs.npmjs.com/getting-started/installing-node). You do not need to remove your current version of npm or Node.js before installing a node version manager. 
 
-## Option 1: Change the permission to npm's default directory
+### Option Two: Change npm's Default Directory 
 
-1. Find the path to npm's directory:
+*This section does not apply to Microsoft Windows. This chapter will be updated to address Windows in the near future.* 
 
-        npm config get prefix
+To minimize the chance of permissions errors, you can configure npm to use a different directory. In this example, it will be a hidden directory on your home folder.
 
-  For many systems, this will be `/usr/local`.
-
-  **WARNING**: If your path is `/usr`, switch to option 2.
-
-2. Change the owner of npm's directory's to the effective name of the current user (your username!):
-
-        sudo chown -R `whoami` <directory>
-
-  If you don't want to change the permissions on the entire directory, you can change permissions on the subfolders `lib/node_modules`, `bin`, and `share`.
-
-## Option 2: Change npm's default directory to another directory
-
-There are times when you do not want to change ownership of the default directory that npm uses; for example, if you are sharing a machine with other users.
-
-In this case, you can configure npm to use a different directory.
+1. Back-up your computer before you start. 
 
 1. Make a directory for global installations:
 
-        mkdir ~/npm-global
+        mkdir ~/.npm-global
 
-1. Configure npm to use the new directory path:
+2. Configure npm to use the new directory path:
 
-        npm config set prefix '~/npm-global'
+        npm config set prefix '~/.npm-global'
 
-1. Open or create a `~/.profile` file and add this line:
+3. Open or create a `~/.profile` file and add this line:
 
-        export PATH=~/npm-global/bin:$PATH
+        export PATH=~/.npm-global/bin:$PATH
 
-1. Back on the command line, update your system variables:
+4. Back on the command line, update your system variables:
 
         source ~/.profile
 
@@ -58,6 +46,10 @@ Test: Download a package globally without using `sudo`.
 
         npm install -g jshint
 
-Instead of steps 2-4 you can also use the corresponding ENV variable (e.g. if you don't want to modify `~/.profile`):
+Instead of steps 2-4, you can use the corresponding ENV variable (e.g. if you don't want to modify `~/.profile`):
 
-        NPM_CONFIG_PREFIX=~/npm-global npm install -g jshint
+        NPM_CONFIG_PREFIX=~/.npm-global
+     
+#### Tip: Consider npx
+
+If you are using npm version 5.2 or greater, explore [npx](https://www.npmjs.com/package/npx) as an alternative way to run global commands, especially if you just need a command occassionally. Click here to read an excellent article about [npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b).
